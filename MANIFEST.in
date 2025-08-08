@@ -1,0 +1,43 @@
+# Include documentation
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+
+# Include configuration files
+include pytest.ini
+include pyproject.toml
+include requirements*.txt
+
+# Include documentation
+recursive-include docs *.md *.rst *.txt
+recursive-include docs *.html *.css *.js
+recursive-include docs *.png *.jpg *.svg
+
+# Include examples
+recursive-include examples *.py *.md *.json *.txt
+
+# Include tests
+recursive-include tests *.py
+
+# Include VSCode extension
+recursive-include vscode-extension *.json *.ts *.js *.md
+
+# Include package data
+recursive-include src/symbolic_security_layer/data *.json *.txt
+recursive-include src/symbolic_security_layer/templates *.html *.md
+
+# Exclude compiled files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude .pytest_cache
+global-exclude *.egg-info
+
+# Exclude development files
+exclude .gitignore
+exclude .github
+exclude .vscode
+exclude *.log
+

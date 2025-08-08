@@ -1,0 +1,152 @@
+{
+  "name": "symbolic-security-layer",
+  "displayName": "Symbolic Security Layer",
+  "description": "Prevents symbolic corruption in AI workflows with semantic anchoring",
+  "version": "1.0.0",
+  "publisher": "ssl-team",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other",
+    "Linters",
+    "Formatters"
+  ],
+  "keywords": [
+    "symbolic",
+    "security",
+    "AI",
+    "unicode",
+    "anchoring"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown",
+    "onLanguage:python",
+    "onLanguage:latex",
+    "onCommand:ssl.secureDocument",
+    "onCommand:ssl.validateSymbols"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ssl.secureDocument",
+        "title": "Secure Document",
+        "category": "SSL"
+      },
+      {
+        "command": "ssl.validateSymbols",
+        "title": "Validate Symbols",
+        "category": "SSL"
+      },
+      {
+        "command": "ssl.showSecurityReport",
+        "title": "Show Security Report",
+        "category": "SSL"
+      },
+      {
+        "command": "ssl.addCustomSymbol",
+        "title": "Add Custom Symbol",
+        "category": "SSL"
+      },
+      {
+        "command": "ssl.exportReport",
+        "title": "Export Security Report",
+        "category": "SSL"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ssl.secureDocument",
+          "group": "ssl",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "ssl.validateSymbols",
+          "group": "ssl"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "ssl.showSecurityReport",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Symbolic Security Layer",
+      "properties": {
+        "ssl.autoSecureOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically secure symbols when saving documents"
+        },
+        "ssl.unicodeThreshold": {
+          "type": "number",
+          "default": 4096,
+          "description": "Unicode codepoint threshold for symbol detection"
+        },
+        "ssl.semanticAnchoring": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable semantic anchoring for symbols"
+        },
+        "ssl.strictValidation": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable strict validation mode"
+        },
+        "ssl.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show SSL status in status bar"
+        },
+        "ssl.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Path to Python interpreter for SSL backend"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "sslSecurityPanel",
+          "name": "SSL Security",
+          "when": "ssl.enabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ssl",
+          "title": "Symbolic Security",
+          "icon": "$(shield)"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+}
+

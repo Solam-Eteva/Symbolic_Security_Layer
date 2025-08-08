@@ -1,0 +1,239 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "symbolic-security-layer"
+dynamic = ["version"]
+description = "Prevents symbolic corruption in AI workflows through semantic anchoring and procedural validation"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "SSL Development Team", email = "ssl-dev@example.com"}
+]
+maintainers = [
+    {name = "SSL Development Team", email = "ssl-dev@example.com"}
+]
+keywords = [
+    "ai", "security", "symbols", "unicode", "machine-learning",
+    "natural-language-processing", "semantic-anchoring", "tensorflow",
+    "pytorch", "openai", "huggingface", "symbolic-ai", "content-validation"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.19.0",
+    "requests>=2.25.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.optional-dependencies]
+tensorflow = ["tensorflow>=2.8.0"]
+pytorch = ["torch>=1.10.0"]
+ml = [
+    "tensorflow>=2.8.0",
+    "torch>=1.10.0",
+    "scikit-learn>=1.0.0",
+]
+visualization = [
+    "matplotlib>=3.3.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+]
+dev = [
+    "pytest>=6.0.0",
+    "pytest-cov>=2.10.0",
+    "black>=21.0.0",
+    "flake8>=3.8.0",
+    "mypy>=0.800",
+    "sphinx>=4.0.0",
+    "sphinx-rtd-theme>=0.5.0",
+]
+openai = ["openai>=1.0.0"]
+huggingface = [
+    "transformers>=4.20.0",
+    "datasets>=2.0.0",
+]
+all = [
+    "tensorflow>=2.8.0",
+    "torch>=1.10.0",
+    "scikit-learn>=1.0.0",
+    "matplotlib>=3.3.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "openai>=1.0.0",
+    "transformers>=4.20.0",
+    "datasets>=2.0.0",
+]
+full = [
+    "tensorflow>=2.8.0",
+    "torch>=1.10.0",
+    "scikit-learn>=1.0.0",
+    "matplotlib>=3.3.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "openai>=1.0.0",
+    "transformers>=4.20.0",
+    "datasets>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ssl-team/symbolic-security-layer"
+Documentation = "https://ssl-docs.example.com"
+Repository = "https://github.com/ssl-team/symbolic-security-layer"
+"Bug Tracker" = "https://github.com/ssl-team/symbolic-security-layer/issues"
+Changelog = "https://github.com/ssl-team/symbolic-security-layer/blob/main/CHANGELOG.md"
+
+[project.scripts]
+ssl-validate = "symbolic_security_layer.cli:validate_command"
+ssl-secure = "symbolic_security_layer.cli:secure_command"
+ssl-report = "symbolic_security_layer.cli:report_command"
+ssl-export = "symbolic_security_layer.cli:export_command"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+symbolic_security_layer = [
+    "data/*.json",
+    "data/*.txt",
+    "templates/*.html",
+    "templates/*.md",
+]
+
+[tool.setuptools_scm]
+write_to = "src/symbolic_security_layer/_version.py"
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["symbolic_security_layer"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg-info",
+    ".venv",
+    ".tox",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "tensorflow.*",
+    "torch.*",
+    "matplotlib.*",
+    "seaborn.*",
+    "plotly.*",
+    "sklearn.*",
+    "transformers.*",
+    "datasets.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--disable-warnings",
+    "--color=yes",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "tensorflow: marks tests that require TensorFlow",
+    "pytorch: marks tests that require PyTorch",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["src/symbolic_security_layer"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/virtualenv/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
